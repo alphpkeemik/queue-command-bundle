@@ -1,0 +1,14 @@
+parameters:
+    # Adds a fallback for initial initialization
+    ambientia.queue_command.bundle_dir: ''
+
+doctrine:
+    orm:
+        mappings:
+            AmbientiaQueueCommandBundle:
+                is_bundle: true
+                type: xml
+                dir: 'Resources/orm'
+                prefix: 'Ambientia\QueueCommand'
+                alias: Ambientia\QueueCommand
+                mapping: true

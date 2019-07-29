@@ -1,0 +1,62 @@
+services:
+
+    ambientia.queue_command.lock_store:
+        class: Symfony\Component\Lock\Store\FlockStore
+        arguments:
+            - '%ambientia.queue_command.flock_dir%'
+
+    Ambientia\QueueCommand\TimeProvider: ~
+
+    Ambientia\QueueCommand\LockProvider:
+        arguments:
+            - '@Psr\Log\LoggerInterface'
+            - '@ambientia.queue_command.lock_store'
+        tags:
+            - { name: monolog.logger, channel: queue-command}
+
+    Ambientia\QueueCommand\CrashedProcessor:
+        arguments:
+            - '@Doctrine\Common\Persistence\ManagerRegistry'
+            - '@Psr\Log\LoggerInterface'
+            - '@Ambientia\QueueCommand\LockProvider'
+            - '@Symfony\Contracts\EventDispatcher\EventDispatcherInterface'
+        tags:
+            - { name: monolog.logger, channel: queue-command}
+
+    Ambientia\QueueCommand\FlockStoreCleaner:
+        arguments:
+            - '@Doctrine\Common\Persistence\ManagerRegistry'
+            - '@Symfony\Component\Filesystem\Filesystem'
+            - '@Psr\Log\LoggerInterface'
+            - '%ambientia.queue_command.flock_dir%'
+        tags:
+            - { name: monolog.logger, channel: queue-command}
+
+    Ambientia\QueueCommand\EntityProcessor:
+        arguments:
+            - '@Symfony\Contracts\EventDispatcher\EventDispatcherInterface'
+            - '@Psr\Container\ContainerInterface'
+            - '@Psr\Log\LoggerInterface'
+        tags:
+            - { name: monolog.logger, channel: queue-command}
+
+    Ambientia\QueueCommand\QueueProcessor:
+        arguments:
+            - '@Doctrine\Common\Persistence\ManagerRegistry'
+            - '@Psr\Log\LoggerInterface'
+            - '@Ambientia\QueueCommand\EntityProcessor'
+            - '@Ambientia\QueueCommand\LockProvider'
+            - '@Ambientia\QueueCommand\TimeProvider'
+        tags:
+            - { name: monolog.logger, channel: queue-command}
+
+    Ambientia\QueueCommand\CriteriaBuilder: ~
+
+    Ambientia\QueueCommand\ExecuteCommand:
+        calls:
+            - [setCrashedProcessor, ['@Ambientia\QueueCommand\CrashedProcessor']]
+            - [setFlockStoreCleaner, ['@Ambientia\QueueCommand\FlockStoreCleaner']]
+            - [setQueueProcessor, ['@Ambientia\QueueCommand\QueueProcessor']]
+            - [setCriteriaBuilder, ['@Ambientia\QueueCommand\CriteriaBuilder']]
+        tags: ['console.command']
+        public: true
