@@ -2,14 +2,15 @@
 
 PHP library for Purging old data from database
 
-## Running code fixer
+## developing
+### Running code fixer
 
 Run php cs fixer `./vendor/bin/php-cs-fixer fix`
 
-## Running the tests
+### Running the tests
 
 Run tests with phpunit `./vendor/bin/phpunit`
 
-## Running analyzer
+### Running analyzer
 
 Run phan `./vendor/bin/phan`

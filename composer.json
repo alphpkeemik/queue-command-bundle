@@ -1,7 +1,7 @@
 {
     "name": "ambientia/queue-command-bundle",
     "type": "symfony-bundle",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "Mati Andreas",
@@ -30,11 +30,5 @@
         "matthiasnoback/symfony-dependency-injection-test": "^4.0",
         "doctrine/doctrine-bundle": "^1.11",
         "doctrine/orm": "^2.6"
-    },
-    "repositories": {
-        "queue-command": {
-            "type": "vcs",
-            "url": "ssh://bitbucket.ambientia.fi:7999/vkmod/queue-command.git"
-        }
     }
 }

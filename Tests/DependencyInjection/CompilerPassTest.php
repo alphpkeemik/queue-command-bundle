@@ -2,8 +2,6 @@
 
 /*
  * This file is part of the Ambientia QueueCommand Bundle package.
- *
- * (c) Ambientia Estonia OÜ
  */
 
 namespace Ambientia\QueueCommandBundle\Tests\DependencyInjection;
