@@ -1,6 +1,6 @@
 # Data cleaner
 
-PHP library for Purging old data from database
+Symfony Bundle for https://github.com/alphpkeemik/queue-command
 
 ## developing
 ### Running code fixer
