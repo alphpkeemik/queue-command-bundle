@@ -52,9 +52,12 @@ services:
 
     Ambientia\QueueCommand\CriteriaBuilder: ~
 
+    Ambientia\QueueCommand\HashGenerator: ~
+
     Ambientia\QueueCommand\Repository:
         arguments:
             - '@Doctrine\Persistence\ManagerRegistry'
+            - '@Ambientia\QueueCommand\HashGenerator'
 
     Ambientia\QueueCommand\ExecuteCommand:
         calls:

@@ -10,6 +10,7 @@ use Ambientia\QueueCommand\CrashedProcessor;
 use Ambientia\QueueCommand\CriteriaBuilder;
 use Ambientia\QueueCommand\ExecuteCommand;
 use Ambientia\QueueCommand\FlockStoreCleaner;
+use Ambientia\QueueCommand\HashGenerator;
 use Ambientia\QueueCommand\QueueCommand;
 use Ambientia\QueueCommand\QueueCommandCommand;
 use Ambientia\QueueCommand\QueueProcessor;
@@ -87,11 +88,23 @@ class ExtensionServicesTest extends AbstractContainerBuilderTestCase
             null
         );
 
+        $this->assertContainerBuilderHasService(
+            HashGenerator::class,
+            null
+        );
+
 
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(
             Repository::class,
             0,
             new Reference(ManagerRegistry::class)
+
+        );
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            Repository::class,
+            1,
+            new Reference(HashGenerator::class)
 
         );
     }
