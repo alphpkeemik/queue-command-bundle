@@ -13,6 +13,8 @@ use Ambientia\QueueCommand\FlockStoreCleaner;
 use Ambientia\QueueCommand\QueueCommand;
 use Ambientia\QueueCommand\QueueCommandCommand;
 use Ambientia\QueueCommand\QueueProcessor;
+use Ambientia\QueueCommand\Repository;
+use Doctrine\Persistence\ManagerRegistry;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractContainerBuilderTestCase;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -79,6 +81,19 @@ class ExtensionServicesTest extends AbstractContainerBuilderTestCase
             'console.command'
         );
 
+
+        $this->assertContainerBuilderHasService(
+            Repository::class,
+            null
+        );
+
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            Repository::class,
+            0,
+            new Reference(ManagerRegistry::class)
+
+        );
     }
 
 }

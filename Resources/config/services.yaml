@@ -52,6 +52,10 @@ services:
 
     Ambientia\QueueCommand\CriteriaBuilder: ~
 
+    Ambientia\QueueCommand\Repository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+
     Ambientia\QueueCommand\ExecuteCommand:
         calls:
             - [setCrashedProcessor, ['@Ambientia\QueueCommand\CrashedProcessor']]
