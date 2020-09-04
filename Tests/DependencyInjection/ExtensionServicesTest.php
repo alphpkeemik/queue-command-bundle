@@ -14,6 +14,7 @@ use Ambientia\QueueCommand\HashGenerator;
 use Ambientia\QueueCommand\QueueCommand;
 use Ambientia\QueueCommand\QueueCommandCommand;
 use Ambientia\QueueCommand\QueueProcessor;
+use Ambientia\QueueCommand\QueueRepository;
 use Ambientia\QueueCommand\Repository;
 use Doctrine\Persistence\ManagerRegistry;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractContainerBuilderTestCase;
@@ -38,6 +39,19 @@ class ExtensionServicesTest extends AbstractContainerBuilderTestCase
     public function testServiceCommand(): void
     {
         $this->loadConfiguration();
+
+
+        $this->assertContainerBuilderHasService(
+            QueueProcessor::class,
+            null
+        );
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            QueueProcessor::class,
+            0,
+            new Reference(QueueRepository::class)
+        );
+
+
         $this->assertContainerBuilderHasService(
             ExecuteCommand::class,
             null
@@ -107,6 +121,21 @@ class ExtensionServicesTest extends AbstractContainerBuilderTestCase
             new Reference(HashGenerator::class)
 
         );
+
+        $this->assertContainerBuilderHasService(
+            QueueRepository::class,
+            null
+        );
+
+
+
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument(
+            QueueRepository::class,
+            0,
+            new Reference(ManagerRegistry::class)
+
+        );
+
     }
 
 }

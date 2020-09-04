@@ -42,7 +42,7 @@ services:
 
     Ambientia\QueueCommand\QueueProcessor:
         arguments:
-            - '@Doctrine\Common\Persistence\ManagerRegistry'
+            - '@Ambientia\QueueCommand\QueueRepository'
             - '@Psr\Log\LoggerInterface'
             - '@Ambientia\QueueCommand\EntityProcessor'
             - '@Ambientia\QueueCommand\LockProvider'
@@ -58,6 +58,10 @@ services:
         arguments:
             - '@Doctrine\Persistence\ManagerRegistry'
             - '@Ambientia\QueueCommand\HashGenerator'
+
+    Ambientia\QueueCommand\QueueRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
 
     Ambientia\QueueCommand\ExecuteCommand:
         calls:
